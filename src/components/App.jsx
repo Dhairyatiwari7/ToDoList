@@ -3,16 +3,19 @@ import {useState} from "react";
 
 function App() {
   const [inputText, setInputText]=useState("");
-  const[items ,addItems]=useState([]);
+  const[items ,setItems]=useState([]);
   function handleChange(event){
     const newValue=event.target.value;
     setInputText(newValue);
   }
   function handleClick(event){
-    addItems((prevValue)=>{
+    setItems((prevValue)=>{
       return [...prevValue,inputText];
     })
     setInputText("");
+  }
+  function deleteItem(index){
+    setItems((prevItems) => prevItems.filter((_, i) => i !== index));
   }
 
   return (
@@ -26,10 +29,10 @@ function App() {
           <span>Add</span>
         </button>
       </div>
-      <div>
-        <ul>
+      <div >
+        <ul >
           {items.map((item, index) => (
-            <li key={index}>{item}</li>
+            <li key={index} onClick={() => deleteItem(index)}>{item}</li>
           ))}
         </ul>
       </div>
